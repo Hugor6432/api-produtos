@@ -1,0 +1,36 @@
+services:
+
+  db:
+    image: postgres:15
+    container_name: postgres_dev
+    environment:
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: senha123
+      POSTGRES_DB: produtos_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U usuario -d produtos_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  db_test:
+    image: postgres:15
+    container_name: postgres_test
+    environment:
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: senha123
+      POSTGRES_DB: testdb
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U usuario -d testdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
