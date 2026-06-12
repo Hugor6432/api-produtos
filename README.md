@@ -49,3 +49,4 @@ tests/test_produtos.py::test_banco_isolado_entre_testes PASSED
 ## Como o isolamento funciona
 
 Cada teste recebe um banco limpo. A fixture `client` no `conftest.py` cria as tabelas antes do teste com `create_all` e destrói tudo depois com `drop_all`. Isso garante que nenhum dado de um teste interfere no próximo.
+![testes](testes.png)
