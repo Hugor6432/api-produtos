@@ -2,15 +2,13 @@
 
 API REST para gerenciamento de produtos, desenvolvida com FastAPI e PostgreSQL.
 
-## Como executar os testes
+## Como executar a aplicação
 
-### 1. Subir o banco de dados de teste
+### 1. Subir os bancos de dados
 
 ```bash
-docker-compose up -d db_test
+docker-compose up -d db db_test
 ```
-
-Aguarde alguns segundos para o banco iniciar.
 
 ### 2. Criar e ativar o ambiente virtual
 
@@ -25,7 +23,15 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 4. Rodar os testes
+### 4. Rodar a aplicação
+
+```bash
+uvicorn main:app --reload
+```
+
+Acesse a interface do CRUD em: http://localhost:8000/docs
+
+## Como executar os testes
 
 ```bash
 python -m pytest --cov=main -v
@@ -33,20 +39,8 @@ python -m pytest --cov=main -v
 
 ## Saída esperada
 
-```
-tests/test_produtos.py::test_listar_produtos_banco_vazio PASSED
-tests/test_produtos.py::test_criar_produto_retorna_id PASSED
-tests/test_produtos.py::test_produto_criado_aparece_na_listagem PASSED
-tests/test_produtos.py::test_buscar_produto_por_id PASSED
-tests/test_produtos.py::test_buscar_produto_inexistente_retorna_404 PASSED
-tests/test_produtos.py::test_deletar_produto_retorna_204 PASSED
-tests/test_produtos.py::test_deletar_produto_confirma_remocao PASSED
-tests/test_produtos.py::test_deletar_produto_inexistente_retorna_404 PASSED
-tests/test_produtos.py::test_payload_invalido_retorna_422[...] PASSED (x4)
-tests/test_produtos.py::test_banco_isolado_entre_testes PASSED
-```
+![testes](testes.png)
 
 ## Como o isolamento funciona
 
 Cada teste recebe um banco limpo. A fixture `client` no `conftest.py` cria as tabelas antes do teste com `create_all` e destrói tudo depois com `drop_all`. Isso garante que nenhum dado de um teste interfere no próximo.
-![testes](testes.png)
